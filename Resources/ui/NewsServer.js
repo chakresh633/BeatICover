@@ -506,6 +506,7 @@ drawer.toggleLeftWindow();
 var actionBar = Ti.UI.createView({
 	top:0,
 	height:"44dp",
+	//backgroundColor:"white"
 	backgroundColor:"#474546"
 });
 
@@ -591,7 +592,7 @@ var leftToolbarBtn = Ti.UI.createLabel({
 	left: "20dp",
 	text:'News',
 	font:{fontSize:18},
-	width:'48',height:'48'
+	width:'48',height:'48',color:'white'
 	
 });
 leftToolbarBtn.addEventListener('click',function(){
@@ -615,7 +616,7 @@ left:influencer_left,
 	text:'Press Release',
 	right : '10',textAlign : 'right',
 	width:'135',height:'48',
-		font:{fontSize:18},
+		font:{fontSize:18},color:'white'
 
 	
 });
@@ -662,7 +663,7 @@ require('news').mybeats(urlnews,InfluncerViewDataFetch, errorHandler);
 var centerLabel = Ti.UI.createLabel({
 	left:event_left,
 	text:'Events',	width:'95',height:'48'
-		,font:{fontSize:18}
+		,font:{fontSize:18},color:'white'
 
 });
 centerLabel.addEventListener('click',function(e){
@@ -691,7 +692,9 @@ NewsView.add(actionBar);
 var actionBar2 = Ti.UI.createView({
 	top:0,
 	height:"44dp",
-	backgroundColor:"#474546"
+	//ackgroundColor:"red",
+	backgroundColor:"#474546",
+	
 });
 
 
@@ -700,7 +703,7 @@ var leftToolbarBtn2 = Ti.UI.createLabel({
 	text:'News',
 		font:{fontSize:18},
 
-	width:'48',height:'48'
+	width:'48',height:'48',color:'white'
 	
 });
 leftToolbarBtn2.addEventListener('click',function(){
@@ -723,7 +726,7 @@ var rightToolbarBtn2 = Ti.UI.createLabel({
 	//right:"3dp",
 	left:influencer_left2,
 	text:'Press Release',	width:'135',height:'48',right : '10', textAlign : 'right'
-		,font:{fontSize:18}
+		,font:{fontSize:18},color:'white'
 
 });
 rightToolbarBtn2.addEventListener("click", function(){
@@ -777,7 +780,7 @@ require('news').mybeats(urlnews,InfluncerViewDataFetch, errorHandler);
 var centerLabel2 = Ti.UI.createLabel({
 	left:event_left2,	font:{fontSize:18},
 
-	text:'Events',	width:'95',height:'48'
+	text:'Events',	width:'95',height:'48',color:'white'
 });
 centerLabel2.addEventListener('click',function(e){
 	//EventsView.add(actionBar);
@@ -811,6 +814,7 @@ EventsView.add(actionBar2);
 var actionBarPressRelease = Ti.UI.createView({
 	top:0,
 	height:"44dp",
+	//backgroundColor:'white',
 	backgroundColor:"#474546"
 });
 
@@ -820,7 +824,8 @@ var leftToolbarBtnPressRelease = Ti.UI.createLabel({
 	text:'News',	
 	font:{fontSize:18},
 
-	width:'48',height:'48'
+	width:'48',height:'48',
+	color:'white'
 	
 });
 leftToolbarBtnPressRelease.addEventListener('click',function(){
@@ -843,7 +848,7 @@ var rightToolbarBtnPressRelease = Ti.UI.createLabel({
 //	right:"3dp",
 	left:influencer_left3,	font:{fontSize:18},
 	right : 10,textAlign:'right',
-	text:'Press Release',	width:'135',height:'48', textAlign : 'right'
+	text:'Press Release',	width:'135',height:'48', textAlign : 'right',color:'white'
 	
 });
 rightToolbarBtnPressRelease.addEventListener("click", function(){
@@ -894,7 +899,7 @@ require('news').mybeats(urlnews,InfluncerViewDataFetch, errorHandler);
 var centerLabelPressRelease = Ti.UI.createLabel({
 	left:event_left,
 	text:'Events',	width:'95',height:'48',
-		font:{fontSize:18},
+		font:{fontSize:18},color:'white'
 
   
 });
@@ -939,7 +944,7 @@ var influencer_left4 = drawer.centerWindow.rect.width/2;
 var leftToolbarBtninfluenCers = Ti.UI.createLabel({
 	left: "20dp",
 	text:'News',	width:'48',height:'48'
-	,font:{fontSize:18}
+	,font:{fontSize:18},color:'white'
 
 	
 });
@@ -962,7 +967,7 @@ var rightToolbarBtninfluenCers = Ti.UI.createLabel({
 //	right:"3dp",
 		left:influencer_left4,	font:{fontSize:18},
 	right : '10',textAlign : 'right',
-	text:'Press Release',	width:'135',height:'48', textAlign : 'right'
+	text:'Press Release',	width:'135',height:'48', textAlign : 'right',color:'white'
 
 });
 rightToolbarBtninfluenCers.addEventListener("click", function(){
@@ -1011,7 +1016,7 @@ require('news').mybeats(urlnews,InfluncerViewDataFetch, errorHandler);
 var centerLabelinfluenCers = Ti.UI.createLabel({
 	left:event_left,	font:{fontSize:18},
 
-	text:'Events',	width:'95',height:'48'
+	text:'Events',	width:'95',height:'48',color:'white'
 });
 centerLabelinfluenCers.addEventListener('click',function(e){
 	//EventsView.add(actionBar);
