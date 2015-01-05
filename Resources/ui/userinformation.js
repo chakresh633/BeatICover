@@ -6,7 +6,7 @@ exports.UserInformation=function(){
 var SECONDS = 3000;
 // every 10 seconds
 var intent = Titanium.Android.createServiceIntent({
-    url : 'notification.js'
+    url : '/ui/notification.js'
 });
 intent.putExtra('interval', SECONDS * 1000);
 // Needs to be milliseconds
