@@ -52,11 +52,13 @@ Ti.API.info("ImageFUllEventUrl+="+imgurl);
 var defaultFontSize=10;
 
   var NewsTitle = Ti.UI.createLabel({
+  	left:0,
     color:'#576996',
     font:{fontFamily:'Arial', fontSize:defaultFontSize+6, fontWeight:'bold'},
     text:nodTitle,
-    left:5, top: 1,
-    width:'auto', height: 'auto'
+    top: 5,
+    width:Ti.UI.SIZE, 
+    height: Ti.UI.SIZE
   });
   // full message date view table
    var StartDate = Ti.UI.createLabel({
@@ -69,20 +71,39 @@ var defaultFontSize=10;
   
 var NewsImage= Ti.UI.createImageView({
     image: imgurl,
-    left:10, top:80,right:10,
-    width:Ti.UI.FILL, height:100
+    top:10,
+    width:Ti.UI.FILL, 
+    height:120
+  });
+  
+  
+  var titleAndImageContainer = Ti.UI.createView({
+  	top:0,
+  	layout : "vertical",
+  	left:8,
+  	right:8,
+  	bottom:0
   });
   
  
-  var NewsCategory = Ti.UI.createButton({
+ titleAndImageContainer.add(NewsTitle);
+ titleAndImageContainer.add(NewsImage);
+ 
+  var NewsImage= Ti.UI.createImageView({
+    image: imgurl,
+    top:10,
+    width:Ti.UI.FILL, 
+    height:120
+  });
+  
+ var NewsCategory = Ti.UI.createButton({
     color:'white',
     font:{fontFamily:'Arial', fontSize:defaultFontSize+6, fontWeight:'bold'},
     title:category,
-    left:20, 
-    top: 180,
-    width:'auto',
+    left:0, 
+    width: "47%",
     backgroundColor:'#67D5F3',
-     height: 30
+     height: 30,
   });
   
 
@@ -197,7 +218,7 @@ var scrollView = Ti.UI.createScrollView({
   showVerticalScrollIndicator: true,
   showHorizontalScrollIndicator: true,
   width: '100%',
-  top:230,
+  top:10,
   bottom : 10
 });
 
@@ -222,13 +243,22 @@ var opts={};
  var shareButton=Ti.UI.createButton({
   	color:'white',
   	title:'Invite Me Please',
-  	top:180,
-  	right:4,
-  	width:165,
+  	left:"6%",
+  	width:"47%",
   	height:30,
   	backgroundColor:'#67D5F3'
   	
   });
+  
+  
+  var categoryAndInvideMeContainer = Ti.UI.createView({
+  	top:20,
+  	layout:"horizontal",
+  	left:0,
+  	right:0,
+  	height:Ti.UI.SIZE
+  });
+  
   shareButton.addEventListener('click',function(e){
   	var data=require('db').getUserData();
   var name=data[0].name;
@@ -413,17 +443,23 @@ require('db').UpdateUserInfo(UserDataForUpdate);
 //scrollView.add(Date);
 //scrollView.add(DateDescription);
 //scrollView.add(Detail);  
-  self.add(NewsTitle);
-  self.add(NewsCategory);
-  self.add(NewsImage);
+  //self.add(NewsTitle);
+  categoryAndInvideMeContainer.add(NewsCategory);
+  categoryAndInvideMeContainer.add(shareButton);
+  titleAndImageContainer.add(categoryAndInvideMeContainer);
+  titleAndImageContainer.add(scrollView);
+  self.add(titleAndImageContainer);
+  //self.add(NewsCategory);
+  //self.add(NewsImage);
+  
  // self.add(StartDate);
 
-self.add(shareButton); 
+//self.add(shareButton); 
 //scrollView.add(Date);scrollView.add(DateDescription);
 //scrollView.add(locations);
 //scrollView.add(LocationDescription);
 //scrollView.add(dd); scrollView.add(Detail);
-self.add(scrollView);
+//self.add(scrollView);
 //alert("self bottom:"+self.bottom+"  scrollview bottom"+scrollView.bottom)
 progressIndicator.hide();
 };

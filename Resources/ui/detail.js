@@ -24,34 +24,72 @@ var imgurl=response[0].field_news_image.match(/src\=([^\s]*)\s/)[1];
 imgurl=imgurl.replace(/"/g, "");
 var defaultFontSize=10;
 
+  // var NewsTitle = Ti.UI.createLabel({
+    // //color:'#576996',
+    // font:{fontFamily:'Arial', fontSize:defaultFontSize+6, fontWeight:'bold'},
+    // text:nodTitle,
+    // left:5, top: 1,
+    // width:'auto', height: 'auto'
+  // });
+  
   var NewsTitle = Ti.UI.createLabel({
-    //color:'#576996',
+  	left:0,
+    color:'#576996',
     font:{fontFamily:'Arial', fontSize:defaultFontSize+6, fontWeight:'bold'},
     text:nodTitle,
-    left:5, top: 1,
-    width:'auto', height: 'auto'
+    top: 5,
+    width:Ti.UI.SIZE, 
+    height: Ti.UI.SIZE
   });
-  
   
   
   Ti.API.info('*********'+imgurl);
   
-var NewsImage= Ti.UI.createImageView({
+// var NewsImage= Ti.UI.createImageView({
+    // image: imgurl,
+    // left:10 ,right:10,top : 80,
+    // width:Ti.UI.FILL, height:100
+  // });
+  
+  var NewsImage= Ti.UI.createImageView({
     image: imgurl,
-    left:10 ,right:10,top : 80,
-    width:Ti.UI.FILL, height:100
+    top:10,
+    width:Ti.UI.FILL, 
+    height:120
+  });
+  
+  
+   var titleAndImageContainer = Ti.UI.createView({
+  	top:0,
+  	layout : "vertical",
+  	left:8,
+  	right:8,
+  	height:Ti.UI.SIZE
   });
   
  
+ titleAndImageContainer.add(NewsTitle);
+ titleAndImageContainer.add(NewsImage);
+ 
+  // var NewsCategory = Ti.UI.createButton({
+    // color:'white',
+    // font:{fontFamily:'Arial', fontSize:defaultFontSize+6, fontWeight:'bold'},
+    // title:category,
+    // left:20, 
+    // top : 180,
+    // width:'auto',
+    // backgroundColor:'#67D5F3',
+     // height: 30
+  // });
+  
   var NewsCategory = Ti.UI.createButton({
     color:'white',
     font:{fontFamily:'Arial', fontSize:defaultFontSize+6, fontWeight:'bold'},
     title:category,
-    left:20, 
-    top : 180,
-    width:'auto',
+    left:0, 
+    width: "47%",
     backgroundColor:'#67D5F3',
-     height: 30
+     height: 30,
   });
   
 
@@ -65,26 +103,74 @@ var NewsImage= Ti.UI.createImageView({
     width:Ti.UI.FILL, height:Ti.UI.FILL
       });
       
+// var scrollView = Ti.UI.createScrollView({
+  // contentWidth: 'auto',
+  // contentHeight: 'auto',
+  // showVerticalScrollIndicator: true,
+  // showHorizontalScrollIndicator: true,
+  // height: '50%',
+  // width: '100%',
+ // // bottom:100,
+  // top:220
+//   
+// });
+
+
 var scrollView = Ti.UI.createScrollView({
   contentWidth: 'auto',
   contentHeight: 'auto',
   showVerticalScrollIndicator: true,
   showHorizontalScrollIndicator: true,
-  height: '50%',
   width: '100%',
- // bottom:100,
-  top:220
-  
+  top:10,
+  bottom : 10
 });
- var shareButton=Ti.UI.createButton({
+
+
+// var detailView = Ti.UI.createView({
+    // backgroundColor: 'white',
+    // //borderColor: '#bbb',
+    // //borderWidth: 1,
+    // //width:'100%',
+    // height:Ti.UI.SIZE,
+    // top: 0, left: 8,
+    // right:8,
+    // layout:'vertical'
+  // });
+
+
+scrollView.add(NewsBody); 
+//detailView.add(rowLocation);
+//detailView.add(rowDetail);
+//scrollView.add(detailView);
+
+ // var shareButton=Ti.UI.createButton({
+  	// color:'white',
+  	// title:'Share',
+  	// top:180,
+  	// right:4,
+  	// width:65,
+  	// height:30,
+  	// backgroundColor:'#67D5F3'
+//   	
+  // });
+  
+  var shareButton=Ti.UI.createButton({
   	color:'white',
-  	title:'Share',
-  	top:180,
-  	right:4,
-  	width:65,
+  	title:'Invite Me Please',
+  	left:"6%",
+  	width:"47%",
   	height:30,
   	backgroundColor:'#67D5F3'
   	
+  });
+  
+  var categoryAndInvideMeContainer = Ti.UI.createView({
+  	top:20,
+  	layout:"horizontal",
+  	left:0,
+  	right:0,
+  	height:Ti.UI.SIZE
   });
   
   shareButton.addEventListener('click',function(e){
@@ -101,13 +187,19 @@ Ti.Android.currentActivity.startActivity(intent);
   });
   
 
-scrollView.add(NewsBody);  
+   //scrollView.add(NewsBody);  
  
-  self.add(NewsTitle);
-  self.add(NewsCategory);
-  self.add(NewsImage);
-  self.add(scrollView);
-self.add(shareButton); 
+  //self.add(titleAndImageContainer);
+  //self.add(NewsCategory);
+  //self.add(NewsImage);
+  //self.add(scrollView);
+//self.add(shareButton); 
+
+categoryAndInvideMeContainer.add(NewsCategory);
+  categoryAndInvideMeContainer.add(shareButton);
+  titleAndImageContainer.add(categoryAndInvideMeContainer);
+  titleAndImageContainer.add(scrollView);
+  self.add(titleAndImageContainer);
 
 };
 require('news').mybeats(newsurl,anurag, errorHandler);
