@@ -1,5 +1,34 @@
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
+
+
+
+
+function print(o){
+    var str='';
+
+    for(var p in o){
+        if(typeof o[p] == 'string'){
+            //str+= p + ': ' + o[p]+'; </br>';
+            console.log(o[p]);
+        }else{
+        	print(o[p]);
+            //str+= p + ': { </br>' + print(o[p]) + '}';
+        }
+    }
+
+    return str;
+}
+
 exports.newsPannel=function(e)
 {
+	
 	
 	
 	//this code is for getting current location after each interval function call after few secode to update location 
@@ -386,10 +415,17 @@ leftMenuView.add(TextBeatICover);
 for (var i = 0;i<BeatsList.length; i++){
 
 	var row = Titanium.UI.createTableViewRow();
-
-
+    var strBeatName = BeatsList[i].beat_name;
+    Ti.API.info("chakresh" + BeatsList[i].beat_name);
+    strBeatName = strBeatName.trim();
+    if(strBeatName.length > 14)
+    {
+    	strBeatName = strBeatName.substring(0, 11);
+    	strBeatName+= "...";
+    		//strBeatName = "Image";
+    }
 	var country = Titanium.UI.createLabel({
-		text:BeatsList[i].beat_name,
+		text:strBeatName,
 		
 		width:'auto',
 		textAlign:'left',
@@ -584,8 +620,9 @@ function onNavDrawerWinOpen(evt) {
 
 
 
+var deduction1 = drawer.centerWindow.rect.width/22;
 
-var event_left=drawer.centerWindow.rect.width/3;
+var event_left=drawer.centerWindow.rect.width/3 - deduction1;
 var influencer_left = drawer.centerWindow.rect.width/2;	
 
 var leftToolbarBtn = Ti.UI.createLabel({
@@ -719,7 +756,8 @@ require('news').mybeats(urlnews,anurag, errorHandler);
 			//drawer.toggleLeftWindow(); //animate back to center
 	
 });
-var event_left2=drawer.centerWindow.rect.width/3;
+
+var event_left2=drawer.centerWindow.rect.width/3 - deduction1;
 var influencer_left2 = drawer.centerWindow.rect.width/2;	
 
 var rightToolbarBtn2 = Ti.UI.createLabel({
@@ -841,7 +879,7 @@ require('news').mybeats(urlnews,anurag, errorHandler);
 			//drawer.toggleLeftWindow(); //animate back to center
 	
 });
-var event_left3=drawer.centerWindow.rect.width/3;
+var event_left3=drawer.centerWindow.rect.width/3 -12;
 var influencer_left3 = drawer.centerWindow.rect.width/2;	
 
 var rightToolbarBtnPressRelease = Ti.UI.createLabel({
@@ -938,7 +976,7 @@ var actionBarinfluenCers = Ti.UI.createView({
 	backgroundColor:"#474546"
 });
 
-var event_left4=drawer.centerWindow.rect.width/3;
+var event_left4=drawer.centerWindow.rect.width/3 -deduction1;
 var influencer_left4 = drawer.centerWindow.rect.width/2;	
 
 var leftToolbarBtninfluenCers = Ti.UI.createLabel({
@@ -1520,36 +1558,33 @@ tableViewForPress = Ti.UI.createTableView({
 });
 
 var iLen=response.length;
-     	for ( var i = 0; i < iLen; i++)
-	 {
-	 	var nid=response[i].nid;
-//var Fileurl=response[i].Press_Release_Files.match(/src\=([^\s]*)\s/)[1];
-//Ti.API.info('fileUrl='+Fileurl);
-//imgurl=imgurl.replace(/"/g, "");
-//var imgurl=response[i].pic;
-Ti.API.info('Events Fetching');
-//Ti.API.info('imgurl='+imgurl);
-Ti.API.info('nid='+nid);
-//Ti.API.info('fileUrl='+fileurl);
-  var fileurl=response[i].files;
+for ( var i = 0; i < iLen; i++)
+{
+var nid=response[i].nid;
+var fileurl=response[i].files;
 var fileext = fileurl.split('//');
 var ext1 = fileext[fileext.length - 1];
 var extar = ext1.split('/');
 var ext = extar[extar.length - 1];
-Ti.API.info('extention='+ext);
 var ext = extar[extar.length - 1];
 var extantionOfFile=ext.split(".");
 var extatMark=extantionOfFile[extantionOfFile.length - 1];
 Ti.API.info('extMark='+extatMark);
+Ti.API.info("chakresh : nid = "  + nid);
+Ti.API.info("chakresh : fileurl = "  + fileurl);
+Ti.API.info("chakresh : fileext = "  + fileext);  
+Ti.API.info("chakresh : ext1 = "  + ext1);
+Ti.API.info("chakresh : extar = "  + extar);
+Ti.API.info("chakresh : ext = "  + ext);
+Ti.API.info("chakresh : extantionOfFile = "  + extantionOfFile);
 
-  
   var row = Ti.UI.createTableViewRow({
     className:'forumEvent', // used to improve table performance
     selectedBackgroundColor:'white',
     rowIndex:i, // custom property, useful for determining the row during events
     height:90,
    // url:'PressDetail.js',
-    name:'anurag'+i,
+   name:'anurag'+i,
   // image:imgurl,
    nid:response[i].nid,
    borderWidth:25,
@@ -1609,23 +1644,56 @@ Ti.API.info('extMark='+extatMark);
     fileUrl:fileurl,
     extMar:extatMark
   });
-  imageCalendar.addEventListener('click',function(e){
+  
+  imageCalendar.addEventListener('click',function(event){
   	
   	var xhr = Ti.Network.createHTTPClient();
-	xhr.onload = function() {
-		var str=e.source.fileName;
+	xhr.onload = function(e1) {
+	
+	
+	Ti.API.info("chakresh : e.FileName == " + event.source.fileName );
+	Ti.API.info("chakresh : e.fileUrl == " + event.source.fileUrl );
+	Ti.API.info("chakresh : e.extMar == " + event.source.extMar );
+			
+	//var fileurl=e;//response[i].files;
+	//var fileext = fileurl.split('//');
+	//Ti.API.info("chakresh : fileurl == " + fileurl );
+	//var ext1 = fileext[fileext.length - 1];
+	//Ti.API.info("chakresh : e == " + e );
+	//var extar = ext1.split('/');
+	//Ti.API.info("chakresh : e == " + e );
+	//var ext = extar[extar.length - 1];
+	//Ti.API.info("chakresh : e == " + e );
+	//var extantionOfFile=ext.split(".");
+	var extatMark=event.source.extMar;
+
+		
+		//Ti.API.info("chakresh : file is getting downloaded" );
+		//print(e1);
+		//if(e.source == null)
+		//	Ti.API.info("chakresh : e.source == null" );	
+		//sleep(2000);
+		
+		//if(e.fileName == null)
+		//	Ti.API.info("chakresh : e.source.fileName == null" );
+		//else
+		//   Ti.API.info("chakresh : e.fileName == " + e.fileName );		
+		
+		
+		var str=event.source.fileName;
+		Ti.API.info("chakresh : str == " + str );
 		//str.replace(/%20/g, "_");
-		str = require('news').getDisplayName(str);
-		str = str.replace(" ", "_");
+		//str = require('news').getDisplayName(str);
+		//str = str.replace(" ", "_");
 		var f = Ti.Filesystem.getFile(Titanium.Filesystem.externalStorageDirectory,str);
 		
 		f.write(this.responseData);
 		var intentFileOpenType='';
-		if(e.source.extMar=='doc'||e.source.extMar=='docx'){
+		if(extatMark=='doc'||extatMark=='docx'){
 			intentFileOpenType='application/msword';
-		}else if(e.source.extMar=='txt'){
+		}else if(extatMark=='txt'){
 			intentFileOpenType='text/plain';
-		}else if(e.source.extMar=='pdf'){
+		}else if(extatMark=='pdf'){
 			intentFileOpenType='application/pdf';
 		}
 		var intent = Ti.Android.createIntent({
@@ -1641,34 +1709,13 @@ Ti.API.info('extMark='+extatMark);
             alert('No apps installed to open to open ' + e.source.extMar + ' type of files');
         }
 	};
- //
-xhr.open("GET", e.source.fileUrl);
+ 
+    //Ti.API.info("before GET Ti.APP.info chakresh fileUrl="+event.source.fileUrl);
+	xhr.open("GET", event.source.fileUrl);
+	//Ti.API.info("after GET Extension="+event.source.extMar);
 	xhr.send();
-//   	
-  // Ti.API.info('fileName='+e.source.fileName);
-  	// Ti.API.info('fileUrl='+e.source.fileUrl);
-// var xhr = Titanium.Network.createHTTPClient({
-    // onload: function() {
-        // // first, grab a "handle" to the file where you'll store the downloaded data
-        // var f = Ti.Filesystem.getFile(Ti.Filesystem.externalStorageDirectory,e.source.fileName);
-        // Ti.API.info('fileName saved is '+ f.nativePath);
-//   
-        // f.write(this.responseData); // write to the file
-         Ti.API.info("Extantion="+e.source.extMar);
-//         
-       // myalert(e.source.fileName, f,e.source.extMar);
-       // row.file=e.source.fileName;
-        // //Ti.App.fireEvent('graphic_downloaded', {filepath:f.nativePath});
-       // // row.add({file:e.source.fileName});
-//        
-    // },
-    // timeout: 10000
-// });
-// xhr.open('GET',e.source.fileUrl);
-// xhr.send();
-//  
-//   	
-//   	  	
+    //Ti.API.info("after SEND Extension="+event.source.extMar);
+   	  	
   });
   row.add(imageCalendar);
   
@@ -1903,9 +1950,9 @@ if(LandHeightForPress!=win.rect.height-50){
 if(tableViewForPress != null)
 	tableViewForPress.setHeight(LandHeightForPress);
 }
-		if(event_left != win.rect.width/3)
+		if(event_left != win.rect.width/3 - deduction1)
 	{
-		    event_left=win.rect.width/3;	
+		    event_left=win.rect.width/3 - deduction1;	
 		
 		
 			Ti.API.info('Post layout called********** Event left='+event_left);
@@ -1920,24 +1967,26 @@ var win=drawer.centerWindow;
 	}
 var win=drawer.centerWindow;
 
-	if(event_left2 != win.rect.width/3){
-		event_left2=win.rect.width/3;
+Ti.API.info("chakresh win.rect.width = " + win.rect.width);
+
+	if(event_left2 != win.rect.width/3 -deduction1){
+		event_left2=win.rect.width/3 -deduction1;
 		centerLabel2.setLeft(event_left2);
 	}
 	
 var win=drawer.centerWindow;
 
-	if(event_left3 != win.rect.width/3){
-		event_left3=win.rect.width/3;
+	if(event_left3 != win.rect.width/3 -deduction1){
+		event_left3=win.rect.width/3 -deduction1;
 	    centerLabelPressRelease.setLeft(event_left3);
 	}
 var win=drawer.centerWindow;
 
 
-		if(event_left4 != win.rect.width/3)
+		if(event_left4 != win.rect.width/3 -deduction1)
 		{
 			
-			event_left4=win.rect.width/3;
+			event_left4=win.rect.width/3 - deduction1;
 			centerLabelinfluenCers.setLeft(event_left4);		
 			
 		}
