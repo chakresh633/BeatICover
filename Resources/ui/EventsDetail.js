@@ -72,8 +72,8 @@ var defaultFontSize=10;
 var NewsImage= Ti.UI.createImageView({
     image: imgurl,
     top:10,
-    width:Ti.UI.FILL, 
-    height:120
+    width:"320px", 
+    height:"140px"
   });
   
   
